@@ -33,7 +33,7 @@ void drawArt(ArtWork artWork, Canvas canvas, Size size) {
   Color bgColor = colorValues[artWork.backgroundIndex];
   canvas.drawColor(bgColor, BlendMode.src);
   Offset center = Offset(size.width / 2, size.height / 2);
-  double radius = size.width + artWork.radiusIndex.toDouble() / 20.0;
+  double radius = size.width * artWork.radiusIndex.toDouble() / 20.0;
   Color fgColor = colorValues[artWork.foregroundIndex];
   Paint paint = Paint()..color = fgColor;
   canvas.drawCircle(center, radius, paint);

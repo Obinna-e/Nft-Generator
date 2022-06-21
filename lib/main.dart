@@ -1,12 +1,10 @@
-// ignore_for_file: unused_import
-
 import 'package:flutter/material.dart';
-import 'package:flutter_nft_generator/artPainter.dart';
+import 'package:flutter_nft_generator/artWork.dart';
 import 'dart:math';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:path_provider/path_provider.dart';
-import 'artWork.dart';
+import 'artpainter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +12,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,9 +26,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
-
   final String title;
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -51,12 +46,8 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CustomPaint(
-              key: paintAreaKey,
-              foregroundPainter: ArtPainter(artWork),
-              size: Size(width / 2, width),
-            )
+          children: <Widget>[
+            CustomPaint(key: paintAreaKey, foregroundPainter: ArtPainter(artWork), size: Size(width / 2, width)),
           ],
         ),
       ),
@@ -72,10 +63,9 @@ class _MyHomePageState extends State<MyHomePage> {
             artWork.foregroundIndex = random.nextInt(numberOfColors);
             while (artWork.foregroundIndex == artWork.backgroundIndex) {
               artWork.foregroundIndex = random.nextInt(numberOfColors);
-            }
-            //Avoid having the same foreground
+            } // Avoid having the same forground and background color
             artWork.radiusIndex = random.nextInt(10) + 1;
-            //Check that the artwork is unique
+            // Here you should check that the artwork is unique
             Uint8List pngBytes = await getPng(artWork);
             var myFile = File('$appDocPath/${artWork.title}.png');
             myFile.writeAsBytesSync(pngBytes);
@@ -83,17 +73,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 '[{"trait_type":"BgColor","value": "${artWork.backgroundIndex}"},{"trait_type":"FgColor","value": "${artWork.foregroundIndex}"},{"trait_type":"Radius","value": "${artWork.radiusIndex}"}]';
             String nftJson =
                 '{"name": "${artWork.title}","description": "This is circle number $i","image": "ipfs://IMAGES_CID/${artWork.title}.png","attributes": $traits}';
-
             myFile = File('$appDocPath/${artWork.title}.json');
             myFile.writeAsStringSync(nftJson);
-            setState(
-              () async {
-                await Future.delayed(const Duration(milliseconds: 1000));
-              },
-            );
+            setState(() {});
+            await Future.delayed(const Duration(milliseconds: 1000));
           }
         },
-      ),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

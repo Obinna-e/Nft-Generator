@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_adjacent_string_concatenation, prefer_interpolation_to_compose_strings
+
 import 'package:flutter/material.dart';
 import 'package:flutter_nft_generator/artWork.dart';
 import 'dart:math';
@@ -67,13 +69,16 @@ class _MyHomePageState extends State<MyHomePage> {
             artWork.radiusIndex = random.nextInt(10) + 1;
             // Here you should check that the artwork is unique
             Uint8List pngBytes = await getPng(artWork);
-            var myFile = File('$appDocPath/${artWork.title}.png');
+            var myFile = File(appDocPath + '/' + artWork.title + '.png');
             myFile.writeAsBytesSync(pngBytes);
-            String traits =
-                '[{"trait_type":"BgColor","value": "${artWork.backgroundIndex}"},{"trait_type":"FgColor","value": "${artWork.foregroundIndex}"},{"trait_type":"Radius","value": "${artWork.radiusIndex}"}]';
-            String nftJson =
-                '{"name": "${artWork.title}","description": "This is circle number $i","image": "ipfs://IMAGES_CID/${artWork.title}.png","attributes": $traits}';
-            myFile = File('$appDocPath/${artWork.title}.json');
+            String traits = '[{"trait_type":"BgColor","value": "${artWork.backgroundIndex}"},' +
+                '{"trait_type":"FgColor","value": "${artWork.foregroundIndex}"},' +
+                '{"trait_type":"Radius","value": "${artWork.radiusIndex}"}]';
+            String nftJson = '{"name": "${artWork.title}",' +
+                '"description": "This is circle number $i",' +
+                '"image": "ipfs://IMAGES_CID/${artWork.title}.png",' +
+                '"attributes": $traits}';
+            myFile = File(appDocPath + '/' + artWork.title + '.json');
             myFile.writeAsStringSync(nftJson);
             setState(() {});
             await Future.delayed(const Duration(milliseconds: 1000));

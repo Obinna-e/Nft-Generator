@@ -1,5 +1,5 @@
 var fs = require('fs')
-const IMAGES_CID = '';
+const IMAGES_CID = 'QmVhWsLp67J8VKnUeFf8vBjU7oBK8Y29xWZgu25nB9gmAX';
 console.log('Images CID', IMAGES_CID);
 //Error message if no args
 if (process.argv.length != 4) return console.log('Enter first and last circle number');
